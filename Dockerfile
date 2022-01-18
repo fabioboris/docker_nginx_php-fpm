@@ -39,6 +39,9 @@ COPY docker/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY docker/nginx.conf /etc/nginx/sites-enabled/default
 
+# Public files permissions
+RUN chown -R www-data:www-data /var/www
+
 # PHP Error Log Files
 RUN mkdir /var/log/php
 RUN touch /var/log/php/errors.log && chmod 777 /var/log/php/errors.log
