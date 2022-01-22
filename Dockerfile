@@ -13,10 +13,10 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
 RUN apt-get update && \
     apt-get install -y apt-utils && \
     apt-get install -y build-essential locales \
-        libmemcached-dev \
-        libpng-dev libjpeg62-turbo-dev libfreetype6-dev jpegoptim optipng pngquant gifsicle \
-        lua-zlib-dev zip unzip \
-        git curl && \
+    libmemcached-dev \
+    libpng-dev libjpeg62-turbo-dev libfreetype6-dev jpegoptim optipng pngquant gifsicle \
+    lua-zlib-dev zip unzip \
+    git curl && \
     apt-get install -y nginx supervisor
 
 # Add docker-php=extension-installer
@@ -30,14 +30,14 @@ RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copy startup script
-COPY docker/start-container /usr/local/bin/start-container
+COPY conf/start-container /usr/local/bin/start-container
 RUN chmod +x /usr/local/bin/start-container
 
 # Copy config files
-COPY docker/supervisor.conf /etc/supervisord.conf
-COPY docker/php.ini /usr/local/etc/php/conf.d/app.ini
-COPY docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-COPY docker/nginx.conf /etc/nginx/sites-enabled/default
+COPY conf/supervisor.conf /etc/supervisord.conf
+COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY conf/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY conf/nginx.conf /etc/nginx/sites-enabled/default
 
 # Public files permissions
 RUN chown -R www-data:www-data /var/www
